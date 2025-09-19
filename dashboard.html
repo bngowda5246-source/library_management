@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Library Statistics</h2>
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Total Books</h3>
+        <p>{{ stats.total_books }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Available Books</h3>
+        <p>{{ stats.available_books }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Borrowed Books</h3>
+        <p>{{ stats.borrowed_books }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Total Members</h3>
+        <p>{{ stats.total_members }}</p>
+    </div>
+</div>
+
+<h2>Recent Activity</h2>
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Book</th>
+            <th>Borrowed By</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for activity in recent_activity %}
+        <tr>
+            <td>{{ activity.title }}</td>
+            <td>{{ activity.borrowed_by }}</td>
+            <td>{{ activity.borrow_date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

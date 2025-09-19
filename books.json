@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "isbn": "978-0-7432-7356-5",
+    "category": "Fiction",
+    "status": "available",
+    "borrowed_by": null,
+    "borrow_date": null,
+    "return_date": null
+  },
+  {
+    "id": 2,
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "isbn": "978-0-06-112008-4",
+    "category": "Fiction",
+    "status": "available",
+    "borrowed_by": null,
+    "borrow_date": "2024-09-15",
+    "return_date": "2025-09-19"
+  },
+  {
+    "id": 3,
+    "title": "Introduction to Algorithms",
+    "author": "Thomas H. Cormen",
+    "isbn": "978-0-262-03384-8",
+    "category": "Computer Science",
+    "status": "available",
+    "borrowed_by": null,
+    "borrow_date": null,
+    "return_date": null
+  },
+  {
+    "id": 5,
+    "title": "Atomic Habits",
+    "author": "Omkar Birajdar",
+    "isbn": "12345",
+    "category": "Productivity",
+    "status": "available",
+    "borrowed_by": null,
+    "borrow_date": "2025-09-19",
+    "return_date": "2025-09-19"
+  }
+]
