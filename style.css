@@ -162,3 +162,61 @@ h2 {
     width: auto;
     margin-right: 10px;
 }
+/* General button style */
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 4px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    background-color: #007bff; /* default blue */
+    color: #fff;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Success (green) */
+.btn-success {
+    background-color: #28a745;
+}
+.btn-success:hover {
+    background-color: #1e7e34;
+}
+
+/* Danger (red) */
+.btn-danger {
+    background-color: #dc3545;
+}
+.btn-danger:hover {
+    background-color: #a71d2a;
+}
+
+/* Warning (orange) */
+.btn-warning {
+    background-color: #ffc107;
+    color: #212529;
+}
+.btn-warning:hover {
+    background-color: #d39e00;
+}
+
+/* Secondary (gray) */
+.btn-secondary {
+    background-color: #6c757d;
+}
+.btn-secondary:hover {
+    background-color: #545b62;
+}
