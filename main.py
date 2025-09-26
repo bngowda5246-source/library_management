@@ -126,20 +126,36 @@ class LibrarySystem:
             return True
         return False
 
-    def return_book(self, book_id):
-        book = self.get_book(book_id)
-        if book and book['status'] == 'borrowed':
-            borrowed_by = book['borrowed_by']
-            member = next((m for m in self.members if m['name'] == borrowed_by), None)
-            if member:
-                if book['title'] in member['borrowed_books']:
-                    member['borrowed_books'].remove(book['title'])
-            book['status'] = 'available'
-            book['borrowed_by'] = None
-            book['return_date'] = datetime.now().strftime('%Y-%m-%d')
-            self.save_data()
-            return True
-        return False
+    def return_book(self, book_id, fine_per_day=10, max_days=14):
+    book = self.get_book(book_id)
+    if book and book['status'] == 'borrowed':
+        borrowed_by = book['borrowed_by']
+        member = next((m for m in self.members if m['name'] == borrowed_by), None)
+
+        borrow_date = datetime.strptime(book['borrow_date'], '%Y-%m-%d')
+        return_date = datetime.now()
+        days_borrowed = (return_date - borrow_date).days
+
+        fine = 0
+        if days_borrowed > max_days:
+            fine = (days_borrowed - max_days) * fine_per_day
+
+        # Update book details
+        book['status'] = 'available'
+        book['borrowed_by'] = None
+        book['return_date'] = return_date.strftime('%Y-%m-%d')
+        book['days_borrowed'] = days_borrowed
+        book['fine'] = fine
+
+        # Update member record
+        if member and book['title'] in member['borrowed_books']:
+            member['borrowed_books'].remove(book['title'])
+
+        self.save_data()
+        return {"days_borrowed": days_borrowed, "fine": fine}
+
+    return None
+
     
     def get_stats(self):
         return {
@@ -248,15 +264,28 @@ def delete_member(member_id):
 
 @app.route('/transactions')
 def transactions():
+    fine_per_day = 10   # you can move this to settings.json later
+    max_days = 14
+
     transactions_list = [
         {
             'book_title': b['title'],
             'borrowed_by': b['borrowed_by'],
-            'borrow_date': b['borrow_date'],
+            'borrow_date': b.get('borrow_date'),
+            'return_date': b.get('return_date'),
+            'days_borrowed': b.get('days_borrowed'),
+            'fine': b.get('fine', 0),
             'status': b['status'].title()
-        } for b in library_system.books if b['borrowed_by']
+        } for b in library_system.books if b.get('borrow_date')
     ]
-    return render_template('transactions.html', transactions=transactions_list)
+    return render_template(
+        'transactions.html',
+        transactions=transactions_list,
+        fine_per_day=fine_per_day,
+        max_days=max_days
+    )
+
+
 
 @app.route('/borrow/<int:book_id>')
 def borrow(book_id):
